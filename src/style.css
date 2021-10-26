@@ -40,6 +40,13 @@ li {
   margin-right: 25px;
 }
 
+.three-dots {
+  float: right;
+  width: 30px;
+  height: 30px;
+  border: none;
+}
+
 .clear-btn {
   width: 100%;
   border: none;

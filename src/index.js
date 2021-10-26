@@ -1,4 +1,5 @@
 import './style.css';
+import threeDots from './assets/three-dots.svg';
 
 const toDoList = [
   {
@@ -44,11 +45,16 @@ function WebPage(list) {
   list.forEach((item) => {
     const listItem = document.createElement('li');
     const checkBox = document.createElement('input');
+    const icon = document.createElement('iframe');
+
     checkBox.type = 'checkbox';
     checkBox.classList = 'check-box';
     listItem.innerHTML = item.description;
+    icon.classList = 'three-dots';
+    icon.src = threeDots;
 
     listItem.appendChild(checkBox);
+    listItem.appendChild(icon);
     listConainer.appendChild(listItem);
   });
 
