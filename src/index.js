@@ -1,28 +1,27 @@
-import _ from 'lodash';
 import './style.css';
 
 const toDoList = [
   {
     index: 1,
     description: 'wash the car',
-    completed: true
+    completed: true,
   },
-  { 
+  {
     index: 2,
     description: 'go out to eat',
-    completed: false
+    completed: false,
   },
-  { 
+  {
     index: 3,
     description: 'complete feature',
-    completed: false 
+    completed: false,
   },
-  { 
+  {
     index: 3,
     description: 'complete feature',
-    completed: false 
-  }
-]
+    completed: false,
+  },
+];
 
 function WebPage(list) {
   const container = document.createElement('div');
@@ -33,30 +32,30 @@ function WebPage(list) {
 
   const todoInput = document.createElement('input');
   todoInput.placeholder = 'Add to your list...';
-  todoInput.classList = 'input-todo'
+  todoInput.classList = 'input-todo';
 
   const listConainer = document.createElement('ul');
   listConainer.classList = 'list-container';
 
   const clearBtn = document.createElement('button');
   clearBtn.classList = 'clear-btn';
-  clearBtn.innerHTML = 'Clear all completed'
+  clearBtn.innerHTML = 'Clear all completed';
 
-  list.forEach(item => {
-    let listItem = document.createElement('li');
-    let checkBox = document.createElement('input');
+  list.forEach((item) => {
+    const listItem = document.createElement('li');
+    const checkBox = document.createElement('input');
     checkBox.type = 'checkbox';
     checkBox.classList = 'check-box';
     listItem.innerHTML = item.description;
 
-    listItem.appendChild(checkBox)
-    listConainer.appendChild(listItem)
+    listItem.appendChild(checkBox);
+    listConainer.appendChild(listItem);
   });
 
-  container.appendChild(heading)
-  container.appendChild(todoInput)
-  container.appendChild(listConainer)
-  container.appendChild(clearBtn)
+  container.appendChild(heading);
+  container.appendChild(todoInput);
+  container.appendChild(listConainer);
+  container.appendChild(clearBtn);
 
   return container;
 }

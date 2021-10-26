@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box;
   padding: 0;
-  font-family:'Lato', sans-serif;
+  font-family: 'Lato', sans-serif;
   transition: 0.8s;
   margin: 0 0;
 }
@@ -45,7 +45,7 @@ li {
   border: none;
   height: 10%;
   margin-top: 12px;
-  padding: 20px 0px !important;
+  padding: 20px 0 !important;
 }
 
 .clear-btn:hover {
