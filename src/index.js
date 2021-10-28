@@ -1,4 +1,5 @@
 import './style.css';
+import checkCompleted from './checkCompleted';
 import threeDots from './assets/three-dots.svg';
 
 const toDoList = [
@@ -46,17 +47,7 @@ function displayList(list) {
       checkBox.checked = 'true';
     }
 
-    checkBox.addEventListener('change', () => {
-      if (!item.completed) {
-        item.completed = true;
-        checkBox.checked = true;
-        localStorage.setItem('list', JSON.stringify(list));
-      } else {
-        item.completed = false;
-        checkBox.checked = false;
-        localStorage.setItem('list', JSON.stringify(list));
-      }
-    });
+    checkCompleted(checkBox, item, list)
 
     listItem.appendChild(checkBox);
     listItem.appendChild(icon);
