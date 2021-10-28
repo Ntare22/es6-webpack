@@ -28,9 +28,16 @@ const toDoList = [
 const container = document.createElement('div');
 container.classList = 'todo-container';
 
+const listConainer = document.createElement('ul');
+listConainer.classList = 'list-container';
+listConainer.id = 'list-container';
+
+const clearBtn = document.createElement('button');
+clearBtn.classList = 'clear-btn';
+clearBtn.innerHTML = 'Clear all completed';
+
 function displayList(list) {
-  const listConainer = document.createElement('ul');
-  listConainer.classList = 'list-container';
+  listConainer.innerHTML = '';
 
   list.forEach((item) => {
     const listItem = document.createElement('li');
@@ -41,6 +48,7 @@ function displayList(list) {
     checkBox.classList = 'check-box';
     listItem.innerHTML = item.description;
     icon.classList = 'three-dots';
+    icon.id = 'three-dots';
     icon.src = threeDots;
 
     if (item.completed) {
@@ -54,6 +62,31 @@ function displayList(list) {
     listConainer.appendChild(listItem);
     container.appendChild(listConainer);
   });
+
+  container.appendChild(clearBtn);
+}
+
+function addTask(list) {
+  const inputElement = document.getElementById('input-todo');
+  inputElement.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+      const newItem = {
+        index: 'adfad',
+        description: inputElement.value,
+        completed: false,
+      };
+      list.push(newItem);
+      localStorage.setItem('list', JSON.stringify(list));
+      displayList(list);
+    }
+  });
+}
+
+function removeTask() {
+  document.getElementById('three-dots').addEventListener('mouseover', () => {
+    console.log(document.getElementById('three-dots'));
+    console.log(document.getElementById('three-dots'));
+  });
 }
 
 function WebPage(list) {
@@ -62,25 +95,20 @@ function WebPage(list) {
 
   const todoInput = document.createElement('input');
   todoInput.placeholder = 'Add to your list...';
-  todoInput.classList = 'input-todo';
+  todoInput.id = 'input-todo';
 
   const listConainer = document.createElement('ul');
   listConainer.classList = 'list-container';
 
-  const clearBtn = document.createElement('button');
-  clearBtn.classList = 'clear-btn';
-  clearBtn.innerHTML = 'Clear all completed';
-
   container.appendChild(heading);
   container.appendChild(todoInput);
   displayList(list);
-  container.appendChild(clearBtn);
 
   return container;
 }
 
-window.onload = () => {
-  const localStorageList = JSON.parse(localStorage.getItem('list'));
-  const updatedList = localStorageList === null ? toDoList : localStorageList;
-  document.body.appendChild(WebPage(updatedList));
-};
+const localStorageList = JSON.parse(localStorage.getItem('list'));
+const updatedList = localStorageList === null ? toDoList : localStorageList;
+document.body.appendChild(WebPage(updatedList));
+addTask(updatedList);
+removeTask();
