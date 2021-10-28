@@ -24,10 +24,48 @@ const toDoList = [
   },
 ];
 
-function WebPage(list) {
-  const container = document.createElement('div');
-  container.classList = 'todo-container';
+const container = document.createElement('div');
+container.classList = 'todo-container';
 
+function displayList(list) {
+  const listConainer = document.createElement('ul');
+  listConainer.classList = 'list-container';
+
+  list.forEach((item) => {
+    const listItem = document.createElement('li');
+    const checkBox = document.createElement('input');
+    const icon = document.createElement('iframe');
+
+    checkBox.type = 'checkbox';
+    checkBox.classList = 'check-box';
+    listItem.innerHTML = item.description;
+    icon.classList = 'three-dots';
+    icon.src = threeDots;
+
+    if (item.completed) {
+      checkBox.checked = 'true';
+    }
+
+    checkBox.addEventListener('change', () => {
+      if (!item.completed) {
+        item.completed = true;
+        checkBox.checked = true;
+        localStorage.setItem('list', JSON.stringify(list));
+      } else {
+        item.completed = false;
+        checkBox.checked = false;
+        localStorage.setItem('list', JSON.stringify(list));
+      }
+    });
+
+    listItem.appendChild(checkBox);
+    listItem.appendChild(icon);
+    listConainer.appendChild(listItem);
+    container.appendChild(listConainer);
+  });
+}
+
+function WebPage(list) {
   const heading = document.createElement('h3');
   heading.innerHTML = 'Today\'s To Do';
 
@@ -42,28 +80,16 @@ function WebPage(list) {
   clearBtn.classList = 'clear-btn';
   clearBtn.innerHTML = 'Clear all completed';
 
-  list.forEach((item) => {
-    const listItem = document.createElement('li');
-    const checkBox = document.createElement('input');
-    const icon = document.createElement('iframe');
-
-    checkBox.type = 'checkbox';
-    checkBox.classList = 'check-box';
-    listItem.innerHTML = item.description;
-    icon.classList = 'three-dots';
-    icon.src = threeDots;
-
-    listItem.appendChild(checkBox);
-    listItem.appendChild(icon);
-    listConainer.appendChild(listItem);
-  });
-
   container.appendChild(heading);
   container.appendChild(todoInput);
-  container.appendChild(listConainer);
+  displayList(list);
   container.appendChild(clearBtn);
 
   return container;
 }
 
-document.body.appendChild(WebPage(toDoList));
+window.onload = () => {
+  const localStorageList = JSON.parse(localStorage.getItem('list'));
+  const updatedList = localStorageList === null ? toDoList : localStorageList;
+  document.body.appendChild(WebPage(updatedList));
+};
