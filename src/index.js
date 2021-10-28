@@ -1,5 +1,5 @@
 import './style.css';
-import checkCompleted from './checkCompleted';
+import checkCompleted from './checkCompleted.js';
 import threeDots from './assets/three-dots.svg';
 
 const toDoList = [
@@ -47,7 +47,7 @@ function displayList(list) {
       checkBox.checked = 'true';
     }
 
-    checkCompleted(checkBox, item, list)
+    checkCompleted(checkBox, item, list);
 
     listItem.appendChild(checkBox);
     listItem.appendChild(icon);
