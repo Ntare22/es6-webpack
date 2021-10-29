@@ -17,7 +17,7 @@ body {
   padding: 20px 15px;
 }
 
-.input-todo {
+#input-todo {
   width: 100%;
   padding: 10px 2px;
   margin-top: 12px;
@@ -30,6 +30,8 @@ ul {
 }
 
 li {
+  display: flex;
+  align-items: center;
   padding: 15px 0;
   border-top: 1px solid #dedbd8;
 }
@@ -40,11 +42,12 @@ li {
   margin-right: 25px;
 }
 
-.three-dots {
-  float: right;
+.delete-btn {
+  margin-left: auto;
   width: 30px;
   height: 30px;
   border: none;
+  background: url('./assets/icons8-trash.svg') no-repeat;
 }
 
 .clear-btn {
@@ -57,4 +60,11 @@ li {
 
 .clear-btn:hover {
   text-decoration: underline;
+}
+
+.list-text {
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  width: 82%;
 }
