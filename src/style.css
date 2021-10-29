@@ -42,11 +42,12 @@ li {
   margin-right: 25px;
 }
 
-.three-dots {
+.delete-btn {
   margin-left: auto;
   width: 30px;
   height: 30px;
   border: none;
+  background: url('./assets/icons8-trash.svg') no-repeat;
 }
 
 .clear-btn {
