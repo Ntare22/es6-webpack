@@ -30,6 +30,8 @@ ul {
 }
 
 li {
+  display: flex;
+  align-items: center;
   padding: 15px 0;
   border-top: 1px solid #dedbd8;
 }
@@ -41,7 +43,7 @@ li {
 }
 
 .three-dots {
-  float: right;
+  margin-left: auto;
   width: 30px;
   height: 30px;
   border: none;
@@ -57,4 +59,11 @@ li {
 
 .clear-btn:hover {
   text-decoration: underline;
+}
+
+.list-text {
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  width: 82%;
 }

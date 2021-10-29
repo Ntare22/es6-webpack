@@ -1,29 +1,10 @@
+import '@fortawesome/fontawesome-free/js/fontawesome';
 import './style.css';
 import checkCompleted from './checkCompleted.js';
 import threeDots from './assets/three-dots.svg';
 
-const toDoList = [
-  {
-    index: 1,
-    description: 'wash the car',
-    completed: true,
-  },
-  {
-    index: 2,
-    description: 'go out to eat',
-    completed: false,
-  },
-  {
-    index: 3,
-    description: 'complete feature',
-    completed: false,
-  },
-  {
-    index: 3,
-    description: 'complete feature',
-    completed: false,
-  },
-];
+
+const localStorageList = JSON.parse(localStorage.getItem('list'));
 
 const container = document.createElement('div');
 container.classList = 'todo-container';
@@ -35,21 +16,33 @@ listConainer.id = 'list-container';
 const clearBtn = document.createElement('button');
 clearBtn.classList = 'clear-btn';
 clearBtn.innerHTML = 'Clear all completed';
+clearBtn.addEventListener('click', () => clearFinishedTasks())
 
+let indexCount;
 function displayList(list) {
   listConainer.innerHTML = '';
 
+  indexCount = 1;
   list.forEach((item) => {
+    item['index'] = indexCount;
+    indexCount++;
     const listItem = document.createElement('li');
+    const listText = document.createElement('input')
     const checkBox = document.createElement('input');
-    const icon = document.createElement('iframe');
+    const icon = document.createElement('button');
 
     checkBox.type = 'checkbox';
     checkBox.classList = 'check-box';
-    listItem.innerHTML = item.description;
+    listText.value = item.description;
+    listText.classList = 'list-text'
+    listItem.id = item.index;
+
     icon.classList = 'three-dots';
     icon.id = 'three-dots';
-    icon.src = threeDots;
+    icon.innerHTML = '<i class="fas fa-ellipsis-v"></i>';
+
+    icon.addEventListener('click', () => removeTask(item));
+    listText.addEventListener('keydown', (e) => editTask(item, list, e))
 
     if (item.completed) {
       checkBox.checked = 'true';
@@ -58,35 +51,50 @@ function displayList(list) {
     checkCompleted(checkBox, item, list);
 
     listItem.appendChild(checkBox);
+    listItem.appendChild(listText)
     listItem.appendChild(icon);
     listConainer.appendChild(listItem);
     container.appendChild(listConainer);
   });
 
+  localStorage.setItem('list', JSON.stringify(list))
+
   container.appendChild(clearBtn);
 }
 
-function addTask(list) {
+function addTask() {
   const inputElement = document.getElementById('input-todo');
   inputElement.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
       const newItem = {
-        index: 'adfad',
         description: inputElement.value,
         completed: false,
       };
-      list.push(newItem);
-      localStorage.setItem('list', JSON.stringify(list));
-      displayList(list);
+      inputElement.value = ''
+      const currentList = JSON.parse(localStorage.getItem('list'))
+      currentList.push(newItem);
+      displayList(currentList);
     }
   });
 }
 
-function removeTask() {
-  document.getElementById('three-dots').addEventListener('mouseover', () => {
-    console.log(document.getElementById('three-dots'));
-    console.log(document.getElementById('three-dots'));
-  });
+
+function editTask(item, list, e) {
+  const arrayList = document.querySelector('#list-container').childNodes;
+  for (let i = 0; i < arrayList.length; i++) {
+    if (item.index == arrayList[i].id) {
+      e.keyCode === 13 ? item.description = arrayList[i].childNodes[1].value : null;
+    }
+  }
+  localStorage.setItem('list', JSON.stringify(list))
+}
+
+
+function removeTask(item) {
+  const currentList = JSON.parse(localStorage.getItem('list'));
+  const newList = currentList.filter(todo => todo.index !== item.index);
+  localStorage.setItem('list', JSON.stringify(newList));
+  displayList(newList)
 }
 
 function WebPage(list) {
@@ -107,8 +115,13 @@ function WebPage(list) {
   return container;
 }
 
-const localStorageList = JSON.parse(localStorage.getItem('list'));
-const updatedList = localStorageList === null ? toDoList : localStorageList;
+function clearFinishedTasks() {
+  const currentList = JSON.parse(localStorage.getItem('list'))
+  const newList = currentList.filter((item) => item.completed !== true);
+  displayList(newList)
+  localStorage.setItem('list', JSON.stringify(newList));
+}
+
+const updatedList = localStorageList === null ? localStorage.setItem('list', JSON.stringify([])) : localStorageList;;
 document.body.appendChild(WebPage(updatedList));
-addTask(updatedList);
-removeTask();
+addTask();
