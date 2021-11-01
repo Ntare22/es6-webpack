@@ -11,7 +11,7 @@
 ## Live Demo
 
 Pending
-<!-- [Live Demo Link](https://livedemo.com) -->
+[Live Demo Link](https://ntare22.github.io/es6-webpack/)
 
 
 ## Getting Started
